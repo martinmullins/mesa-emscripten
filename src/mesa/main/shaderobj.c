@@ -447,19 +447,22 @@ _mesa_lookup_shader_program_err_glthread(struct gl_context *ctx, GLuint name,
                                          bool glthread, const char *caller)
 {
    if (!name) {
-      _mesa_error_glthread_safe(ctx, GL_INVALID_VALUE, glthread, "%s", caller);
+      fprintf(stderr, "%s", caller);
+      //_mesa_error_glthread_safe(ctx, GL_INVALID_VALUE, glthread, "%s", caller);
       return NULL;
    }
    else {
       struct gl_shader_program *shProg = (struct gl_shader_program *)
          _mesa_HashLookup(ctx->Shared->ShaderObjects, name);
       if (!shProg) {
-         _mesa_error_glthread_safe(ctx, GL_INVALID_VALUE, glthread,
+        // _mesa_error_glthread_safe(ctx, GL_INVALID_VALUE, glthread,
+        fprintf(stderr,
                                    "%s", caller);
          return NULL;
       }
       if (shProg->Type != GL_SHADER_PROGRAM_MESA) {
-         _mesa_error_glthread_safe(ctx, GL_INVALID_OPERATION, glthread,
+        // _mesa_error_glthread_safe(ctx, GL_INVALID_OPERATION, glthread,
+        fprintf(stderr,
                                    "%s", caller);
          return NULL;
       }

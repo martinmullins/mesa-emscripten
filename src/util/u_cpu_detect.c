@@ -750,5 +750,13 @@ static once_flag cpu_once_flag = ONCE_FLAG_INIT;
 void
 util_cpu_detect(void)
 {
+#ifdef HAVE_PTHREAD
    call_once(&cpu_once_flag, util_cpu_detect_once);
+#else
+  static int done = 0;
+  if (!done) {
+    done = 1;
+    util_cpu_detect_once();
+  }
+#endif
 }

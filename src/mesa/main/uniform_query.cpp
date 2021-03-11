@@ -58,7 +58,8 @@ _mesa_GetActiveUniform_impl(GLuint program, GLuint index,
    struct gl_program_resource *res;
 
    if (maxLength < 0) {
-      _mesa_error_glthread_safe(ctx, GL_INVALID_VALUE, glthread,
+      //_mesa_error_glthread_safe(ctx, GL_INVALID_VALUE, glthread,
+        fprintf(stderr,
                                 "glGetActiveUniform(maxLength < 0)");
       return;
    }
@@ -72,7 +73,8 @@ _mesa_GetActiveUniform_impl(GLuint program, GLuint index,
                                            GL_UNIFORM, index);
 
    if (!res) {
-      _mesa_error_glthread_safe(ctx, GL_INVALID_VALUE, glthread,
+      //_mesa_error_glthread_safe(ctx, GL_INVALID_VALUE, glthread,
+        fprintf(stderr,
                                 "glGetActiveUniform(index)");
       return;
    }

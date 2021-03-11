@@ -412,7 +412,15 @@ static once_flag init_once = ONCE_FLAG_INIT;
 void
 _mesa_initialize(void)
 {
+#ifdef HAVE_PTHREAD
    call_once(&init_once, one_time_init);
+#else
+   static int done = 0;
+   if (!done) {
+     done = 1;
+     one_time_init();
+   }
+#endif
 }
 
 

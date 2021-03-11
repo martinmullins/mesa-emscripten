@@ -81,7 +81,15 @@ global_init(void)
 static void
 add_to_atexit_list(struct util_queue *queue)
 {
-   call_once(&atexit_once_flag, global_init);
+#ifdef HAVE_PTHREAD
+  call_once(&atexit_once_flag, global_init);
+#else 
+  static int done = 0;
+  if (!done) {
+    done = 1;
+    global_init();
+  }
+#endif
 
    mtx_lock(&exit_mutex);
    list_add(&queue->head, &queue_list);

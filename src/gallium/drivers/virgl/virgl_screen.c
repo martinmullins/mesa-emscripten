@@ -827,6 +827,7 @@ fixup_formats(union virgl_caps *caps, struct virgl_supported_format_mask *mask)
 struct pipe_screen *
 virgl_create_screen(struct virgl_winsys *vws, const struct pipe_screen_config *config)
 {
+  printf("CREATE SCREEN\n");
    struct virgl_screen *screen = CALLOC_STRUCT(virgl_screen);
 
    const char *VIRGL_GLES_EMULATE_BGRA = "gles_emulate_bgra";

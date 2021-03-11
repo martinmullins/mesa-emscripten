@@ -560,11 +560,11 @@ _mesa_glthread_CallList(struct gl_context *ctx, GLuint list)
     * all display lists are up to date and the driver thread is not
     * modifiying them. We will be executing them in the application thread.
     */
-   int batch = p_atomic_read(&ctx->GLThread.LastDListChangeBatchIndex);
-   if (batch != -1) {
-      util_queue_fence_wait(&ctx->GLThread.batches[batch].fence);
-      p_atomic_set(&ctx->GLThread.LastDListChangeBatchIndex, -1);
-   }
+   //int batch = p_atomic_read(&ctx->GLThread.LastDListChangeBatchIndex);
+   //if (batch != -1) {
+   //   util_queue_fence_wait(&ctx->GLThread.batches[batch].fence);
+   //   p_atomic_set(&ctx->GLThread.LastDListChangeBatchIndex, -1);
+   //}
 
    /* Clear GL_COMPILE_AND_EXECUTE if needed. We only execute here. */
    unsigned saved_mode = ctx->GLThread.ListMode;
@@ -589,11 +589,11 @@ _mesa_glthread_CallLists(struct gl_context *ctx, GLsizei n, GLenum type,
     * all display lists are up to date and the driver thread is not
     * modifiying them. We will be executing them in the application thread.
     */
-   int batch = p_atomic_read(&ctx->GLThread.LastDListChangeBatchIndex);
-   if (batch != -1) {
-      util_queue_fence_wait(&ctx->GLThread.batches[batch].fence);
-      p_atomic_set(&ctx->GLThread.LastDListChangeBatchIndex, -1);
-   }
+   //int batch = p_atomic_read(&ctx->GLThread.LastDListChangeBatchIndex);
+   //if (batch != -1) {
+   //   util_queue_fence_wait(&ctx->GLThread.batches[batch].fence);
+   //   p_atomic_set(&ctx->GLThread.LastDListChangeBatchIndex, -1);
+   //}
 
    /* Clear GL_COMPILE_AND_EXECUTE if needed. We only execute here. */
    unsigned saved_mode = ctx->GLThread.ListMode;

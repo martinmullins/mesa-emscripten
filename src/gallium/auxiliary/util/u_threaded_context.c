@@ -230,8 +230,9 @@ tc_batch_flush(struct threaded_context *tc)
       tc_unflushed_batch_token_reference(&next->token, NULL);
    }
 
-   util_queue_add_job(&tc->queue, next, &next->fence, tc_batch_execute,
-                      NULL, 0);
+   // no threads??? not sure what to do yet
+   //util_queue_add_job(&tc->queue, next, &next->fence, tc_batch_execute,
+   //                   NULL, 0);
    tc->last = tc->next;
    tc->next = (tc->next + 1) % TC_MAX_BATCHES;
 }
@@ -306,10 +307,10 @@ _tc_sync(struct threaded_context *tc, UNUSED const char *info, UNUSED const char
    tc_debug_check(tc);
 
    /* Only wait for queued calls... */
-   if (!util_queue_fence_is_signalled(&last->fence)) {
-      util_queue_fence_wait(&last->fence);
-      synced = true;
-   }
+   //if (!util_queue_fence_is_signalled(&last->fence)) {
+   //   //util_queue_fence_wait(&last->fence);
+   //   synced = true;
+   //}
 
    tc_debug_check(tc);
 
@@ -361,10 +362,10 @@ threaded_context_flush(struct pipe_context *_pipe,
       /* Prefer to do the flush in the driver thread if it is already
        * running. That should be better for cache locality.
        */
-      if (prefer_async || !util_queue_fence_is_signalled(&last->fence))
-         tc_batch_flush(tc);
-      else
-         tc_sync(token->tc);
+      //if (prefer_async || !util_queue_fence_is_signalled(&last->fence))
+      //   tc_batch_flush(tc);
+      //else
+        tc_sync(token->tc);
    }
 }
 
@@ -2932,14 +2933,14 @@ tc_destroy(struct pipe_context *_pipe)
 
    tc_sync(tc);
 
-   if (util_queue_is_initialized(&tc->queue)) {
-      util_queue_destroy(&tc->queue);
+   //if (util_queue_is_initialized(&tc->queue)) {
+   //   util_queue_destroy(&tc->queue);
 
-      for (unsigned i = 0; i < TC_MAX_BATCHES; i++) {
-         util_queue_fence_destroy(&tc->batch_slots[i].fence);
-         assert(!tc->batch_slots[i].token);
-      }
-   }
+   //   for (unsigned i = 0; i < TC_MAX_BATCHES; i++) {
+   //      util_queue_fence_destroy(&tc->batch_slots[i].fence);
+   //      assert(!tc->batch_slots[i].token);
+   //   }
+   //}
 
    slab_destroy_child(&tc->pool_transfers);
    assert(tc->batch_slots[tc->next].num_total_call_slots == 0);
@@ -3029,14 +3030,14 @@ threaded_context_create(struct pipe_context *pipe,
     * from the queue before being executed, so keep one tc_batch slot for that
     * execution. Also, keep one unused slot for an unflushed batch.
     */
-   if (!util_queue_init(&tc->queue, "gdrv", TC_MAX_BATCHES - 2, 1, 0))
-      goto fail;
+   //if (!util_queue_init(&tc->queue, "gdrv", TC_MAX_BATCHES - 2, 1, 0))
+   //   goto fail;
 
-   for (unsigned i = 0; i < TC_MAX_BATCHES; i++) {
-      tc->batch_slots[i].sentinel = TC_SENTINEL;
-      tc->batch_slots[i].pipe = pipe;
-      util_queue_fence_init(&tc->batch_slots[i].fence);
-   }
+   //for (unsigned i = 0; i < TC_MAX_BATCHES; i++) {
+   //   tc->batch_slots[i].sentinel = TC_SENTINEL;
+   //   tc->batch_slots[i].pipe = pipe;
+   //   util_queue_fence_init(&tc->batch_slots[i].fence);
+   //}
 
    list_inithead(&tc->unflushed_queries);
 

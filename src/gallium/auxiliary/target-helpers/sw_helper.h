@@ -40,6 +40,13 @@
 static inline struct pipe_screen *
 sw_screen_create_named(struct sw_winsys *winsys, const char *driver)
 {
+  printf(" DRIVER IS %s\n", driver);
+  printf(" DRIVER IS %s\n", driver);
+  printf(" DRIVER IS %s\n", driver);
+  printf(" DRIVER IS %s\n", driver);
+  printf(" DRIVER IS %s\n", driver);
+  printf(" DRIVER IS %s\n", driver);
+  printf(" DRIVER IS %s\n", driver);
    struct pipe_screen *screen = NULL;
 
 #if defined(GALLIUM_LLVMPIPE)
@@ -49,9 +56,16 @@ sw_screen_create_named(struct sw_winsys *winsys, const char *driver)
 
 #if defined(GALLIUM_VIRGL)
    if (screen == NULL && strcmp(driver, "virpipe") == 0) {
+      printf("USING VIRPIPE\n");
+      printf("USING VIRPIPE\n");
+      printf("USING VIRPIPE\n");
+      printf("USING VIRPIPE\n");
+      fflush(stdout);
       struct virgl_winsys *vws;
       vws = virgl_vtest_winsys_wrap(winsys);
       screen = virgl_create_screen(vws, NULL);
+   } else {
+     printf("SCREEN IS NOT NULL????\n");
    }
 #endif
 

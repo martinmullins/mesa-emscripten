@@ -142,12 +142,12 @@ _mesa_glthread_init(struct gl_context *ctx)
    glthread->LastDListChangeBatchIndex = -1;
 
    /* Execute the thread initialization function in the thread. */
-   struct util_queue_fence fence;
-   util_queue_fence_init(&fence);
-   util_queue_add_job(&glthread->queue, ctx, &fence,
-                      glthread_thread_initialization, NULL, 0);
-   util_queue_fence_wait(&fence);
-   util_queue_fence_destroy(&fence);
+   //struct util_queue_fence fence;
+   //util_queue_fence_init(&fence);
+   //util_queue_add_job(&glthread->queue, ctx, &fence,
+   //                   glthread_thread_initialization, NULL, 0);
+   //util_queue_fence_wait(&fence);
+   //util_queue_fence_destroy(&fence);
 }
 
 static void
@@ -281,10 +281,10 @@ _mesa_glthread_finish(struct gl_context *ctx)
    struct glthread_batch *next = glthread->next_batch;
    bool synced = false;
 
-   if (!util_queue_fence_is_signalled(&last->fence)) {
-      util_queue_fence_wait(&last->fence);
-      synced = true;
-   }
+   //if (!util_queue_fence_is_signalled(&last->fence)) {
+   //   util_queue_fence_wait(&last->fence);
+   //   synced = true;
+   //}
 
    if (glthread->used) {
       p_atomic_add(&glthread->stats.num_direct_items, glthread->used);

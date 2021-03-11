@@ -975,13 +975,15 @@ _mesa_get_program_resource_name(struct gl_shader_program *shProg,
    * <programInterface>.
    */
    if (!res) {
-      _mesa_error_glthread_safe(ctx, GL_INVALID_VALUE, glthread,
+      //_mesa_error_glthread_safe(ctx, GL_INVALID_VALUE, glthread,
+      fprintf(stderr,
                                 "%s(index %u)", caller, index);
       return false;
    }
 
    if (bufSize < 0) {
-      _mesa_error_glthread_safe(ctx, GL_INVALID_VALUE, glthread,
+      //_mesa_error_glthread_safe(ctx, GL_INVALID_VALUE, glthread,
+      fprintf(stderr,
                                 "%s(bufSize %d)", caller, bufSize);
       return false;
    }
@@ -1332,7 +1334,8 @@ get_buffer_property(struct gl_shader_program *shProg,
    assert(!"support for property type not implemented");
 
 invalid_operation:
-   _mesa_error_glthread_safe(ctx, GL_INVALID_OPERATION, glthread,
+   //_mesa_error_glthread_safe(ctx, GL_INVALID_OPERATION, glthread,
+      fprintf(stderr,
                              "%s(%s prop %s)", caller,
                              _mesa_enum_to_string(res->Type),
                              _mesa_enum_to_string(prop));
@@ -1586,14 +1589,16 @@ _mesa_program_resource_prop(struct gl_shader_program *shProg,
 #undef VALIDATE_TYPE_2
 
 invalid_enum:
-   _mesa_error_glthread_safe(ctx, GL_INVALID_ENUM, glthread,
+   //_mesa_error_glthread_safe(ctx, GL_INVALID_ENUM, glthread,
+      fprintf(stderr,
                              "%s(%s prop %s)", caller,
                              _mesa_enum_to_string(res->Type),
                              _mesa_enum_to_string(prop));
    return 0;
 
 invalid_operation:
-   _mesa_error_glthread_safe(ctx, GL_INVALID_OPERATION, glthread,
+   //_mesa_error_glthread_safe(ctx, GL_INVALID_OPERATION, glthread,
+      fprintf(stderr,
                              "%s(%s prop %s)", caller,
                              _mesa_enum_to_string(res->Type),
                              _mesa_enum_to_string(prop));
@@ -1616,7 +1621,8 @@ _mesa_get_program_resourceiv(struct gl_shader_program *shProg,
 
    /* No such resource found or bufSize negative. */
    if (!res || bufSize < 0) {
-      _mesa_error(ctx, GL_INVALID_VALUE,
+      //_mesa_error(ctx, GL_INVALID_VALUE,
+      fprintf(stderr,
                   "glGetProgramResourceiv(%s index %d bufSize %d)",
                   _mesa_enum_to_string(programInterface), index, bufSize);
       return;

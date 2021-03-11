@@ -110,8 +110,6 @@ files_mesa_util = files(
   'u_atomic.h',
   'u_dynarray.h',
   'u_endian.h',
-  'u_queue.c',
-  'u_queue.h',
   'u_string.h',
   'u_thread.h',
   'u_vector.c',
@@ -132,6 +130,13 @@ files_mesa_util = files(
   'vma.h',
   'xxhash.h',
 )
+
+if dep_thread.found()
+  files_mesa_util += files(
+    'u_queue.c',
+    'u_queue.h',
+  )
+endif
 
 files_drirc = files('00-mesa-defaults.conf')
 

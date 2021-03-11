@@ -140,11 +140,11 @@ _mesa_marshal_GetActiveUniform(GLuint program, GLuint index, GLsizei bufSize,
    GET_CURRENT_CONTEXT(ctx);
 
    /* Wait for the last glLinkProgram call. */
-   int batch = p_atomic_read(&ctx->GLThread.LastProgramChangeBatch);
-   if (batch != -1) {
-      util_queue_fence_wait(&ctx->GLThread.batches[batch].fence);
-      assert(p_atomic_read(&ctx->GLThread.LastProgramChangeBatch) == -1);
-   }
+   //int batch = p_atomic_read(&ctx->GLThread.LastProgramChangeBatch);
+   //if (batch != -1) {
+   //   util_queue_fence_wait(&ctx->GLThread.batches[batch].fence);
+   //   assert(p_atomic_read(&ctx->GLThread.LastProgramChangeBatch) == -1);
+   //}
 
    /* We can execute glGetActiveUniform without syncing if we are sync'd to
     * the last calls of glLinkProgram and glDeleteProgram because shader

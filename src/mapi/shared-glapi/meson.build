@@ -40,8 +40,8 @@ _glapi_c_args = []
 if with_platform_windows
   _glapi_c_args += ['-D_GLAPI_DLL_EXPORTS']
 endif
-
-libglapi = shared_library(
+message('OK LETS BUILD SHARED API???')
+libglapi = static_library(
   'glapi',
   [files_mapi_glapi, files_mapi_util, shared_glapi_mapi_tmp_h],
   c_args : [

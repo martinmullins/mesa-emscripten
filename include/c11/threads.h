@@ -65,7 +65,10 @@ enum {
 #elif defined(HAVE_PTHREAD)
 #include "threads_posix.h"
 #else
-#error Not supported on this platform.
+#define HAVE_PTHREAD 1
+#include "threads_posix.h"
+#undef HAVE_PTHREAD
+//#error Not supported on this platform.
 #endif
 
 

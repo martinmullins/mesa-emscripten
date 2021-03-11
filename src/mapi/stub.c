@@ -54,8 +54,16 @@ static int next_dynamic_slot = MAPI_TABLE_NUM_STATIC;
 void
 stub_init_once(void)
 {
+#ifdef HAVE_PTHREAD
    static once_flag flag = ONCE_FLAG_INIT;
    call_once(&flag, entry_patch_public);
+#else
+   static int done = 0;
+   if (!done) {
+     done = 1;
+     entry_patch_public();
+   }
+#endif
 }
 
 static int

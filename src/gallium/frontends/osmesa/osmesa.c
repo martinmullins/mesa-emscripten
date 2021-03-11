@@ -50,7 +50,9 @@
 
 
 #include <stdio.h>
+#ifdef HAVE_PTHREAD
 #include <c11/threads.h>
+#endif
 #include "GL/osmesa.h"
 
 #include "glapi/glapi.h"  /* for OSMesaGetProcAddress below */
@@ -170,10 +172,17 @@ create_st_manager(void)
 static struct st_manager *
 get_st_manager(void)
 {
-   static once_flag create_once_flag = ONCE_FLAG_INIT;
+#ifdef HAVE_PTHREAD
+  static once_flag create_once_flag = ONCE_FLAG_INIT;
 
-   call_once(&create_once_flag, create_st_manager);
-
+  call_once(&create_once_flag, create_st_manager);
+#else
+  static int done = 0;
+  if (!done) {
+    done = 1;
+    create_st_manager();
+  }
+#endif
    return stmgr;
 }
 

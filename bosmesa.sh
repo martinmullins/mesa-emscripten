@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# meson  --reconfigure \
+meson  \
+  --debug \
+  --prefix=/tmp/osmesa \
+  -Dandroid-stub=false \
+  -Dbuild-aco-tests=false \
+  -Dbuild-tests=false \
+	-Ddri-drivers=  \
+  -Ddri3=disabled \
+  -Degl=disabled \
+  -Denable-glcpp-tests=false \
+  -Dfreedreno-kgsl=false \
+	-Dgallium-drivers=swrast \
+  -Dgallium-extra-hud=false \
+  -Dgallium-nine=false \
+  -Dgallium-omx=disabled \
+  -Dgallium-opencl=disabled \
+  -Dgallium-va=disabled \
+  -Dgallium-vdpau=disabled \
+  -Dgallium-xa=disabled \
+  -Dgallium-xvmc=disabled \
+  -Dgbm=disabled \
+  -Dgles1=disabled \
+  -Dgles2=disabled \
+  -Dglvnd=false \
+  -Dglx=disabled \
+  -Dglx-direct=false \
+  -Dglx-read-only-text=false \
+  -Dinstall-intel-gpu-tests=false \
+  -Dlibunwind=disabled \
+  -Dllvm=disabled \
+  -Dlmsensors=disabled \
+  -Dmicrosoft-clc=disabled \
+  -Dopencl-native=false \
+  -Dopencl-spirv=false \
+  -Dopengl=true \
+  -Dosmesa=true  \
+  -Dplatforms= \
+  -Dpower8=auto\
+  -Dprefer-iris=true \
+  -Dselinux=false \
+  -Dshader-cache=disabled \
+  -Dshader-cache-default=false \
+  -Dshared-glapi=auto \
+  -Dshared-llvm=auto \
+  -Dshared-swr=true \
+  -Dspirv-to-dxil=false  \
+  -Dsse2=true \
+  -Dvalgrind=disabled \
+  -Dvulkan-device-select-layer=false \
+  -Dvulkan-drivers= \
+  -Dvulkan-overlay-layer=false \
+  -Dxlib-lease=disabled \
+  -Dzlib=enabled \
+  -Dzstd=disabled  \
+  ..

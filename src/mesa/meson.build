@@ -162,8 +162,6 @@ files_libmesa_common = files(
   'main/glformats.h',
   'main/glspirv.c',
   'main/glspirv.h',
-  'main/glthread.c',
-  'main/glthread.h',
   'main/glthread_bufferobj.c',
   'main/glthread_draw.c',
   'main/glthread_get.c',
@@ -350,6 +348,11 @@ files_libmesa_common = files(
   'vbo/vbo_util.h',
   'x86/common_x86.c',
 )
+
+# should add these if threads exist
+#
+#  'main/glthread.c',
+#  'main/glthread.h',
 
 # mesa files
 files_libmesa_classic = files(

@@ -26,6 +26,7 @@
 
 #ifndef U_THREAD_H_
 #define U_THREAD_H_
+#define HAVE_PTHREAD 1
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -319,4 +320,5 @@ static inline void util_barrier_wait(util_barrier *barrier)
 
 #endif
 
+#undef HAVE_PTHREAD
 #endif /* U_THREAD_H_ */

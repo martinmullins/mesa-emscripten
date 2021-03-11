@@ -186,6 +186,12 @@ with_dri_r200 = dri_drivers.contains('r200')
 with_dri_nouveau = dri_drivers.contains('nouveau')
 
 with_dri = dri_drivers.length() != 0
+message('!!!!!!! ' + with_dri.to_string())
+message('!!!!!!! ' + with_dri.to_string())
+message('!!!!!!! ' + with_dri.to_string())
+message('!!!!!!! ' + with_dri.to_string())
+message('!!!!!!! ' + with_dri.to_string())
+message('!!!!!!! ' + with_dri.to_string())
 
 gallium_drivers = get_option('gallium-drivers')
 if gallium_drivers.contains('auto')
@@ -242,6 +248,7 @@ with_gallium = gallium_drivers.length() != 0
 if with_gallium and system_has_kms_drm
   _glx = get_option('glx')
   _egl = get_option('egl')
+  message('!!!!!!! _glx='  + _glx + ' _egl=' + _egl)
   if _glx == 'dri' or _egl == 'enabled' or (_glx == 'disabled' and _egl != 'disabled')
     with_dri = true
   endif
@@ -449,11 +456,11 @@ endif
 
 # Android uses emutls for versions <= P/28. For USE_ELF_TLS we need ELF TLS.
 use_elf_tls = false
-if not ['windows', 'freebsd', 'openbsd', 'haiku'].contains(host_machine.system()) and (not with_platform_android or get_option('platform-sdk-version') >= 29)
-  pre_args += '-DUSE_ELF_TLS'
-  use_elf_tls = true
-endif
-
+# if not ['windows', 'freebsd', 'openbsd', 'haiku'].contains(host_machine.system()) and (not with_platform_android or get_option('platform-sdk-version') >= 29)
+#   pre_args += '-DUSE_ELF_TLS'
+#   use_elf_tls = true
+# endif
+# 
 if with_glx != 'disabled'
   if not (with_platform_x11 and with_any_opengl)
     error('Cannot build GLX support without X11 platform support and at least one OpenGL API')
@@ -1398,7 +1405,8 @@ else
   dep_zstd = null_dep
 endif
 
-dep_thread = dependency('threads')
+# dep_thread = dependency('threads')
+dep_thread = null_dep
 if dep_thread.found() and host_machine.system() != 'windows'
   pre_args += '-DHAVE_PTHREAD'
   if host_machine.system() != 'netbsd' and cc.has_function(
@@ -1935,6 +1943,8 @@ if dep_libdrm.found()
 endif
 
 gl_priv_libs = []
+# still link to pthread
+gl_priv_libs += ['-lpthread', '-pthread']
 if dep_thread.found()
   gl_priv_libs += ['-lpthread', '-pthread']
 endif
@@ -1986,6 +1996,7 @@ lines = ['',
                                                     with_gles1 ? 'yes' : 'no',
                                                     with_gles2 ? 'yes' : 'no'),
 ]
+
 
 if with_osmesa
   lines += ''

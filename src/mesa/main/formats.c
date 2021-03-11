@@ -506,7 +506,15 @@ _mesa_format_from_array_format(uint32_t array_format)
 
    assert(_mesa_format_is_mesa_array_format(array_format));
 
+#ifdef HAVE_PTHREAD
    call_once(&format_array_format_table_exists, format_array_format_table_init);
+#else
+   static int done = 0;
+   if (!done) {
+     done = 1;
+     format_array_format_table_init();
+   }
+#endif
 
    if (!format_array_format_table) {
       static const once_flag once_flag_init = ONCE_FLAG_INIT;

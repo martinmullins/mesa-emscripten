@@ -27,8 +27,8 @@ extern "C" {
 static inline struct pipe_screen *
 debug_screen_wrap(struct pipe_screen *screen)
 {
-   screen = ddebug_screen_create(screen);
-   screen = rbug_screen_create(screen);
+   //screen = ddebug_screen_create(screen);
+   //screen = rbug_screen_create(screen);
    screen = trace_screen_create(screen);
    screen = noop_screen_create(screen);
 
