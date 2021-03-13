@@ -29,6 +29,9 @@
 
 #ifndef _WIN32
 #include "anon_file.h"
+#if defined(__EMSCRIPTEN__)
+#undef HAVE_MEMFD_CREATE
+#endif
 
 #include <unistd.h>
 #include <fcntl.h>

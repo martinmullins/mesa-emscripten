@@ -27,6 +27,10 @@
  * wrappers, and calls into the driver-specific code as necessary.
  */
 
+#if defined(__EMSCRIPTEN__)
+#undef HAVE_MEMFD_CREATE
+#endif
+
 #include <c11/threads.h>
 #include <errno.h>
 #include <linux/memfd.h>

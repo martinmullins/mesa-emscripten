@@ -31,6 +31,7 @@
  * 
  * @author Jose Fonseca <jfonseca@vmware.com>
  */
+#undef HAVE_EXECINFO_H
 
 #include "pipe/p_compiler.h"
 #include "os/os_thread.h"

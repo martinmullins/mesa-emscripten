@@ -1077,7 +1077,7 @@ else
     # gcc does aggressive dead-store elimination which threats all writes
     # to the memory before the constructor as "dead stores".
     # For now we disable this optimization.
-    '-flifetime-dse=1',
+    #'-flifetime-dse=1',
   ]
   # MinGW chokes on format specifiers and I can't get it all working
   if not (cc.get_id() == 'gcc' and host_machine.system() == 'windows')
@@ -1139,35 +1139,35 @@ if host_machine.system() == 'windows'
   endif
 endif
 
-if get_option('sse2') and host_machine.system() == 'windows' and host_machine.cpu_family() == 'x86' and cc.get_id() == 'gcc'
-  # These settings make generated MinGW code match MSVC and follow
-  # GCC advice on https://gcc.gnu.org/wiki/FloatingPointMath#x86note
-  #
-  # NOTE: We need to ensure stack is realigned given that we
-  # produce shared objects, and have no control over the stack
-  # alignment policy of the application. Therefore we need
-  # -mstackrealign or -mincoming-stack-boundary=2.
-  #
-  # XXX: We could have SSE without -mstackrealign if we always used
-  # __attribute__((force_align_arg_pointer)), but that's not
-  # always the case.
-  c_args += ['-msse', '-msse2', '-mfpmath=sse', '-mstackrealign']
-endif
-
-if host_machine.cpu_family().startswith('x86') and cc.get_id() != 'msvc'
-  pre_args += '-DUSE_SSE41'
-  with_sse41 = true
-  sse41_args = ['-msse4.1']
-
-  # GCC on x86 (not x86_64) with -msse* assumes a 16 byte aligned stack, but
-  # that's not guaranteed
-  if host_machine.cpu_family() == 'x86'
-    sse41_args += '-mstackrealign'
-  endif
-else
+#if get_option('sse2') and host_machine.system() == 'windows' and host_machine.cpu_family() == 'x86' and cc.get_id() == 'gcc'
+#  # These settings make generated MinGW code match MSVC and follow
+#  # GCC advice on https://gcc.gnu.org/wiki/FloatingPointMath#x86note
+#  #
+#  # NOTE: We need to ensure stack is realigned given that we
+#  # produce shared objects, and have no control over the stack
+#  # alignment policy of the application. Therefore we need
+#  # -mstackrealign or -mincoming-stack-boundary=2.
+#  #
+#  # XXX: We could have SSE without -mstackrealign if we always used
+#  # __attribute__((force_align_arg_pointer)), but that's not
+#  # always the case.
+#  c_args += ['-msse', '-msse2', '-mfpmath=sse', '-mstackrealign']
+#endif
+#
+#if host_machine.cpu_family().startswith('x86') and cc.get_id() != 'msvc'
+#  pre_args += '-DUSE_SSE41'
+#  with_sse41 = true
+#  sse41_args = ['-msse4.1']
+#
+#  # GCC on x86 (not x86_64) with -msse* assumes a 16 byte aligned stack, but
+#  # that's not guaranteed
+#  if host_machine.cpu_family() == 'x86'
+#    sse41_args += '-mstackrealign'
+#  endif
+#else
   with_sse41 = false
   sse41_args = []
-endif
+#endif
 
 # Check for GCC style atomics
 dep_atomic = null_dep
@@ -1216,43 +1216,44 @@ dep_ws2_32 = cc.find_library('ws2_32', required : with_platform_windows)
 
 # TODO: shared/static? Is this even worth doing?
 
-with_asm_arch = ''
-if host_machine.cpu_family() == 'x86'
-  if system_has_kms_drm or host_machine.system() == 'gnu'
-    with_asm_arch = 'x86'
-    pre_args += ['-DUSE_X86_ASM', '-DUSE_MMX_ASM', '-DUSE_3DNOW_ASM',
-                 '-DUSE_SSE_ASM']
-
-    if with_glx_read_only_text
-      pre_args += ['-DGLX_X86_READONLY_TEXT']
-    endif
-  endif
-elif host_machine.cpu_family() == 'x86_64'
-  if system_has_kms_drm
-    with_asm_arch = 'x86_64'
-    pre_args += ['-DUSE_X86_64_ASM']
-  endif
-elif host_machine.cpu_family() == 'arm'
-  if system_has_kms_drm
-    with_asm_arch = 'arm'
-    pre_args += ['-DUSE_ARM_ASM']
-  endif
-elif host_machine.cpu_family() == 'aarch64'
-  if system_has_kms_drm
-    with_asm_arch = 'aarch64'
-    pre_args += ['-DUSE_AARCH64_ASM']
-  endif
-elif host_machine.cpu_family() == 'sparc64'
-  if system_has_kms_drm
-    with_asm_arch = 'sparc'
-    pre_args += ['-DUSE_SPARC_ASM']
-  endif
-elif host_machine.cpu_family().startswith('ppc64') and host_machine.endian() == 'little'
-  if system_has_kms_drm
-    with_asm_arch = 'ppc64le'
-    pre_args += ['-DUSE_PPC64LE_ASM']
-  endif
-endif
+#with_asm_arch = ''
+#if host_machine.cpu_family() == 'x86'
+#  if system_has_kms_drm or host_machine.system() == 'gnu'
+#    with_asm_arch = 'x86'
+#    pre_args += ['-DUSE_X86_ASM', '-DUSE_MMX_ASM', '-DUSE_3DNOW_ASM',
+#                 '-DUSE_SSE_ASM']
+#
+#    if with_glx_read_only_text
+#      pre_args += ['-DGLX_X86_READONLY_TEXT']
+#    endif
+#  endif
+#elif host_machine.cpu_family() == 'x86_64'
+#  if system_has_kms_drm
+#    with_asm_arch = 'x86_64'
+#    pre_args += ['-DUSE_X86_64_ASM']
+#  endif
+#elif host_machine.cpu_family() == 'arm'
+#  if system_has_kms_drm
+#    with_asm_arch = 'arm'
+#    pre_args += ['-DUSE_ARM_ASM']
+#  endif
+#elif host_machine.cpu_family() == 'aarch64'
+#  if system_has_kms_drm
+#    with_asm_arch = 'aarch64'
+#    pre_args += ['-DUSE_AARCH64_ASM']
+#  endif
+#elif host_machine.cpu_family() == 'sparc64'
+#  if system_has_kms_drm
+#    with_asm_arch = 'sparc'
+#    pre_args += ['-DUSE_SPARC_ASM']
+#  endif
+#elif host_machine.cpu_family().startswith('ppc64') and host_machine.endian() == 'little'
+#  if system_has_kms_drm
+#    with_asm_arch = 'ppc64le'
+#    pre_args += ['-DUSE_PPC64LE_ASM']
+#  endif
+#endif
+with_asm_arch = 'nodice'
 
 # Check for standard headers and functions
 if (cc.has_header_symbol('sys/sysmacros.h', 'major') and

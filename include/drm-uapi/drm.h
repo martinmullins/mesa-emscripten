@@ -36,7 +36,7 @@
 #ifndef _DRM_H_
 #define _DRM_H_
 
-#if   defined(__linux__)
+#if   defined(__linux__) 
 
 #include <linux/types.h>
 #include <asm/ioctl.h>
@@ -45,7 +45,7 @@ typedef unsigned int drm_handle_t;
 #else /* One of the BSDs */
 
 #include <stdint.h>
-#include <sys/ioccom.h>
+//include <sys/ioccom.h>
 #include <sys/types.h>
 typedef int8_t   __s8;
 typedef uint8_t  __u8;

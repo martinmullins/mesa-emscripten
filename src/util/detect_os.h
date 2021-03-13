@@ -81,6 +81,11 @@
 #define DETECT_OS_UNIX 1
 #endif
 
+#if defined(__EMSCRIPTEN__)
+#define DETECT_OS_LINUX 1
+#define DETECT_OS_UNIX 1
+#endif
+
 
 /*
  * Make sure DETECT_OS_* are always defined, so that they can be used with #if

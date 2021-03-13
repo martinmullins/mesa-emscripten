@@ -68,15 +68,15 @@
 static inline int
 util_get_current_cpu(void)
 {
-#if DETECT_OS_LINUX && !defined(ANDROID)
-   return sched_getcpu();
-
-#elif defined(_WIN32) && !defined(__CYGWIN__) && _WIN32_WINNT >= 0x0600
-   return GetCurrentProcessorNumber();
-
-#else
+//#if DETECT_OS_LINUX && !defined(ANDROID)
+//   return sched_getcpu();
+//
+//#elif defined(_WIN32) && !defined(__CYGWIN__) && _WIN32_WINNT >= 0x0600
+//   return GetCurrentProcessorNumber();
+//
+//#else
    return -1;
-#endif
+//#endif
 }
 
 static inline thrd_t u_thread_create(int (*routine)(void *), void *param)
@@ -103,21 +103,21 @@ static inline thrd_t u_thread_create(int (*routine)(void *), void *param)
 
 static inline void u_thread_setname( const char *name )
 {
-#if defined(HAVE_PTHREAD)
-#if DETECT_OS_LINUX || DETECT_OS_CYGWIN || DETECT_OS_SOLARIS
-   pthread_setname_np(pthread_self(), name);
-#elif DETECT_OS_FREEBSD || DETECT_OS_OPENBSD
-   pthread_set_name_np(pthread_self(), name);
-#elif DETECT_OS_NETBSD
-   pthread_setname_np(pthread_self(), "%s", (void *)name);
-#elif DETECT_OS_APPLE
-   pthread_setname_np(name);
-#elif DETECT_OS_HAIKU
-   rename_thread(find_thread(NULL), name);
-#else
-#warning Not sure how to call pthread_setname_np
-#endif
-#endif
+//#if defined(HAVE_PTHREAD)
+//#if DETECT_OS_LINUX || DETECT_OS_CYGWIN || DETECT_OS_SOLARIS
+//   pthread_setname_np(pthread_self(), name);
+//#elif DETECT_OS_FREEBSD || DETECT_OS_OPENBSD
+//   pthread_set_name_np(pthread_self(), name);
+//#elif DETECT_OS_NETBSD
+//   pthread_setname_np(pthread_self(), "%s", (void *)name);
+//#elif DETECT_OS_APPLE
+//   pthread_setname_np(name);
+//#elif DETECT_OS_HAIKU
+//   rename_thread(find_thread(NULL), name);
+//#else
+//#warning Not sure how to call pthread_setname_np
+//#endif
+//#endif
    (void)name;
 }
 
