@@ -5,6 +5,7 @@ EMSCRIPTEN NOTES
 ------
 
 .. code-block:: sh
+
    $ sh bosmesa_emscripten.sh
    $ cd build-em
    $ ninja
