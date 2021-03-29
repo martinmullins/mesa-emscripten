@@ -1,7 +1,20 @@
 #!/usr/bin/env bash
-# meson  --reconfigure \
-meson  \
-  --debug \
+
+# enable debugging
+#DEBUG="--debug"
+OPTIMIZED="--optimization=3"
+
+BUILD_DIR="./build-em"
+if [[ ! -d "$BUILD_DIR" ]]; then
+  mkdir -p "$BUILD_DIR"
+else
+  RECONFIGURE="--reconfigure"
+fi
+
+(
+cd "$BUILD_DIR"
+pwd
+meson  $RECONFIGURE $DEBUG $OPTIMIZED \
   --prefix=/tmp/osmesa \
   -Dandroid-stub=false \
   -Dbuild-aco-tests=false \
@@ -55,3 +68,13 @@ meson  \
   -Dzlib=enabled \
   -Dzstd=disabled  \
   ..
+
+# tell ninja to use the emscriptend SDK toolchain
+sed -e 's/command = ccache cc/command = emcc/g' \
+    -e 's/command = ccache c++/command = em++/g' \
+    -e 's/command = ccache c++/command = em++/g' \
+    -e 's/\(command = .*\) gcc-ar/\1 emar/g' \
+    -e 's/command = c++/command = em++/g' \
+    -i build.ninja
+)
+  
