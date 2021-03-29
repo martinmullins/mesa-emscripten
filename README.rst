@@ -1,6 +1,15 @@
 `Mesa <https://mesa3d.org>`_ - The 3D Graphics Library
 ======================================================
 
+EMSCRIPTEN NOTES
+------
+
+.. code-block:: sh
+   $ sh bosmesa_emscripten.sh
+   $ cd build-em
+   $ ninja
+   $ ninja install
+
 
 Source
 ------
